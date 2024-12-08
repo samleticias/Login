@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     user.getPassword(),
                     mapRolesToAuthorities(user.getRoles()));
         } else {
-            throw new UsernameNotFoundException("Usuário ou senha inválidos..");
+            throw new UsernameNotFoundException("Usuário ou senha inválidos.");
         }
     }
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
