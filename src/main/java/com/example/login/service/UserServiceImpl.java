@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -51,6 +52,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> findAllUsers() {
-        return null;
+        List<User> users = userRepository.findAll();
+        return users.stream().map((user) -> convertEntityToDTO(user))
+                .collect(Collectors.toList());
+    }
+
+    private UserDTO convertEntityToDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        String[] name = user.getName().split(" ");
+        userDTO.setFirstName(name[0]);
+        userDTO.setLastName(name[1]);
+        userDTO.setEmail(user.getEmail());
+        return userDTO;
     }
 }
